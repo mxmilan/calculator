@@ -5,7 +5,7 @@ const divide = (a , b)  => a / b;
 let num1 = null;   
 let operator = ' ';
 let num2 = null;
-currentNum = '';
+let currentNum = '';
 
 const operate = (num1 , operator , num2) => { 
     num1 = parseFloat(num1);
@@ -17,8 +17,8 @@ const operate = (num1 , operator , num2) => {
 } else if (operator === '*') {
     return multiply(num1 , num2);
 } else if (operator === '/') {
-    return divide( num1, num2)
-} else {o
+    return divide(num1, num2)
+} else {
     return 'Invalid Operator';
 }
 };
@@ -30,9 +30,11 @@ digitButtons.forEach(button => {
     button.addEventListener('click', (event) => {
         const digit = event.target.id; 
         display.textContent += digit;
-       
+        currentNum += digit;
     });
 });
+
+
 
 const operationButtons = document.querySelectorAll('.operator')
 operationButtons.forEach(button => {
@@ -40,8 +42,9 @@ operationButtons.forEach(button => {
         const operator = event.target.id;
         if (num1 == null) {
             num1 = currentNum;
-            this.operator = operator
+            this.operator = operator;
             currentNum = '';
+            display.textContent = '';
         } else {
             num2 = currentNum;
             num1 = operate( num1 , this.operator , num2);
