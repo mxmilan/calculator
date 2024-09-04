@@ -3,24 +3,26 @@ const subtract = (a, b) => a - b;
 const multiply = (a , b) => a * b;
 const divide = (a , b)  => a / b;
 let num1 = null;   
-let operator = ' ';
+let operator = '';
 let num2 = null;
-let currentNum = '';
+currentNum = '';
+let equal = '='
 
 const operate = (num1 , operator , num2) => { 
     num1 = parseFloat(num1);
     num2 = parseFloat(num2)
-    if (operator === '+') {
-   return add(num1 , num2); 
-} else if (operator === '-') {
-    return subtract(num1 , num2);
-} else if (operator === '*') {
-    return multiply(num1 , num2);
-} else if (operator === '/') {
-    return divide(num1, num2)
-} else {
-    return 'Invalid Operator';
-}
+    switch (operator) {
+        case 'add':
+            return add(num1, num2); 
+        case 'subtract':
+            return subtract(num1, num2);
+        case 'multiply':
+            return multiply(num1, num2);
+        case 'divide':
+            return divide(num1, num2);
+        default:
+            return 'Invalid Operator';
+    }
 };
 
 const display = document.querySelector('.display');
@@ -39,20 +41,29 @@ digitButtons.forEach(button => {
 const operationButtons = document.querySelectorAll('.operator')
 operationButtons.forEach(button => {
     button.addEventListener('click' , (event) => {
-        const operator = event.target.id;
+        const clickedOperator = event.target.id;
         if (num1 == null) {
             num1 = currentNum;
-            this.operator = operator;
+            operator = clickedOperator;
             currentNum = '';
             display.textContent = '';
         } else {
             num2 = currentNum;
-            num1 = operate( num1 , this.operator , num2);
-            this.operator = operator;
+            num1 = operate(num1, operator, num2);
+            operator = clickedOperator;
             currentNum = '';
+            display.textContent = num1;
         }
     });
 });
 
 
-
+const equalsButton = document.querySelector('.equals')
+equalsButton.addEventListener('click' , () => {
+    if (num1 !== null && operator !== '' && currentNum !== '') {
+    num2 = currentNum;
+    currentNum = '';
+    num1 = operate(num1, operator, num2);
+    display.textContent = num1;
+    }
+});
