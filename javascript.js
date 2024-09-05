@@ -6,7 +6,7 @@ let num1 = null;
 let operator = '';
 let num2 = null;
 currentNum = '';
-let equal = '='
+let equal = '=';
 
 const operate = (num1 , operator , num2) => { 
     num1 = parseFloat(num1);
@@ -37,7 +37,6 @@ digitButtons.forEach(button => {
 });
 
 
-
 const operationButtons = document.querySelectorAll('.operator')
 operationButtons.forEach(button => {
     button.addEventListener('click' , (event) => {
@@ -66,4 +65,13 @@ equalsButton.addEventListener('click' , () => {
     num1 = operate(num1, operator, num2);
     display.textContent = num1;
     }
+});
+
+const clearButton = document.querySelector('.clear')
+clearButton.addEventListener('click' , () => {
+    currentNum = '';
+    display.textContent = '';
+    num1 = null;
+    num2 = null;
+    operator = '';
 });
