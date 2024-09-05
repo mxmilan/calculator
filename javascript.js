@@ -37,33 +37,41 @@ digitButtons.forEach(button => {
 });
 
 
-const operationButtons = document.querySelectorAll('.operator')
+const operationButtons = document.querySelectorAll('.operator');
 operationButtons.forEach(button => {
-    button.addEventListener('click' , (event) => {
+    button.addEventListener('click', (event) => {
         const clickedOperator = event.target.id;
+
         if (num1 == null) {
+            // Initial operator press
             num1 = currentNum;
             operator = clickedOperator;
             currentNum = '';
             display.textContent = '';
         } else {
-            num2 = currentNum;
-            num1 = operate(num1, operator, num2);
+            // Handle subsequent operators
+            if (currentNum !== '') {
+                num2 = currentNum;
+                num1 = operate(num1, operator, num2);
+                display.textContent = num1;
+                currentNum = ''; // Reset for new input
+            }
+            // Set the new operator
             operator = clickedOperator;
-            currentNum = '';
-            display.textContent = num1;
+            display.textContent = '';
         }
     });
 });
 
 
-const equalsButton = document.querySelector('.equals')
-equalsButton.addEventListener('click' , () => {
+const equalsButton = document.querySelector('.equals');
+equalsButton.addEventListener('click', () => {
     if (num1 !== null && operator !== '' && currentNum !== '') {
-    num2 = currentNum;
-    currentNum = '';
-    num1 = operate(num1, operator, num2);
-    display.textContent = num1;
+        num2 = currentNum;
+        num1 = operate(num1, operator, num2);
+        display.textContent = num1;
+        currentNum = ''; // Reset for new input
+        // `operator` is reset here, so it should be ready for the next operation
     }
 });
 
