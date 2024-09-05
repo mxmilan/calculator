@@ -10,19 +10,25 @@ let equal = '=';
 
 const operate = (num1 , operator , num2) => { 
     num1 = parseFloat(num1);
-    num2 = parseFloat(num2)
+    num2 = parseFloat(num2);
+    let result;
     switch (operator) {
         case 'add':
-            return add(num1, num2); 
+            result = add(num1, num2);
+            break;
         case 'subtract':
-            return subtract(num1, num2);
+            result = subtract(num1, num2);
+            break;
         case 'multiply':
-            return multiply(num1, num2);
+            result = multiply(num1, num2);
+            break;
         case 'divide':
-            return divide(num1, num2);
+            result = divide(num1, num2);
+            break;
         default:
             return 'Invalid Operator';
     }
+    return parseFloat(result.toFixed(2));
 };
 
 const display = document.querySelector('.display');
@@ -34,6 +40,12 @@ digitButtons.forEach(button => {
         display.textContent += digit;
         currentNum += digit;
     });
+});
+
+const backspaceButton = document.querySelector('.backspace')
+backspaceButton.addEventListener('click' , () => {
+    display.textContent = display.textContent.slice(0,-1);
+    currentNum = currentNum.slice(0,1);
 });
 
 
