@@ -7,6 +7,7 @@ let operator = '';
 let num2 = null;
 currentNum = '';
 let equal = '=';
+let resultDisplayed = false;
 
 const operate = (num1 , operator , num2) => { 
     num1 = parseFloat(num1);
@@ -36,6 +37,11 @@ const display = document.querySelector('.display');
 const digitButtons = document.querySelectorAll('.digit')
 digitButtons.forEach(button => {
     button.addEventListener('click', (event) => {
+        if (resultDisplayed) {
+            display.textContent = ''; // Clear the display for new input
+            currentNum = ''; // Reset current number
+            resultDisplayed = false; // User started new input
+        }
         const digit = event.target.id; 
         display.textContent += digit;
         currentNum += digit;
@@ -44,10 +50,20 @@ digitButtons.forEach(button => {
 
 const backspaceButton = document.querySelector('.backspace')
 backspaceButton.addEventListener('click' , () => {
-    display.textContent = display.textContent.slice(0,-1);
-    currentNum = currentNum.slice(0,1);
+    if (!resultDisplayed) { // Only allow backspace if result is not displayed
+        display.textContent = display.textContent.slice(0, -1);
+        currentNum = currentNum.slice(0, -1);
+    }
 });
 
+const decimalButton = document.querySelector('.decimal');
+decimalButton.addEventListener('click' , () => {
+if (!currentNum.includes('.')) {
+    const decimal = '.';
+    display.textContent += decimal;
+    currentNum += decimal;
+}
+});
 
 const operationButtons = document.querySelectorAll('.operator');
 operationButtons.forEach(button => {
@@ -83,7 +99,8 @@ equalsButton.addEventListener('click', () => {
         num1 = operate(num1, operator, num2);
         display.textContent = num1;
         currentNum = ''; // Reset for new input
-        // `operator` is reset here, so it should be ready for the next operation
+        operator = '';
+        resultDisplayed = true; // Result is displayed, backspace should be disabled now
     }
 });
 
